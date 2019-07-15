@@ -1,0 +1,63 @@
+{
+  "private": true,
+  "name": "cors-proxy",
+  "version": "0.0.0",
+  "description": "CORS proxy",
+  "repository": "https://github.com/MaxMilton/cors-proxy",
+  "author": "Max Milton <max@wearegenki.com>",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "lint": "yarn lint:md && yarn lint:js && yarn lint:types",
+    "lint:md": "remark --frail --quiet .",
+    "lint:js": "eslint --ext js,md --report-unused-disable-directives .",
+    "lint:types": "tsc --noEmit",
+    "test": "jest --notify --watch",
+    "test-ci": "jest --coverage --runInBand --ci"
+  },
+  "dependencies": {
+    "httpie": "1.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "12.6.3",
+    "@wearegenki/renovate-config": "1.0.0",
+    "codecov": "3.5.0",
+    "eslint": "6.0.1",
+    "jest": "24.8.0",
+    "minna-tools": "0.27.0",
+    "prettier": "1.18.2",
+    "remark-cli": "6.0.1",
+    "typescript": "3.5.3"
+  },
+  "prettier": "minna-tools/prettier",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@minna-ui/eslint-config",
+      "@minna-ui/eslint-config/node-js"
+    ]
+  },
+  "eslintIgnore": [
+    "**/node_modules/**",
+    "__sapper__/**",
+    "_backup/**",
+    "test/coverage/**"
+  ],
+  "remarkConfig": {
+    "plugins": [
+      "minna-tools/remark"
+    ]
+  },
+  "jest": {
+    "preset": "minna-tools"
+  },
+  "renovate": {
+    "extends": [
+      "@wearegenki"
+    ]
+  },
+  "engines": {
+    "node": ">=10.16.0"
+  }
+}

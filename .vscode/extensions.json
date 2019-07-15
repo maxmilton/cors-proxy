@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "drewbourne.vscode-remark-lint",
+    "esbenp.prettier-vscode"
+  ]
+}

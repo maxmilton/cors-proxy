@@ -1,0 +1,4 @@
+node_modules
+/test/coverage/
+package-lock.json*
+yarn-error.log
