@@ -35,15 +35,10 @@ function requestHandler(req, res) {
 
 const server = http.createServer(requestHandler);
 
-server.listen(
-  PORT,
-  /** @param {Error} err - Node error. */
-  (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+server.on('error', (err) => {
+  console.error(err);
+});
 
-    console.log(`Server is listening on ${PORT}`);
-  },
-);
+server.listen(PORT, () => {
+  console.log(`Server is listening on ${PORT}`);
+});
