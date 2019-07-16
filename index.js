@@ -17,6 +17,9 @@ function requestHandler(req, res) {
 
   send(req.method, url)
     .then((result) => {
+      const type = result.headers['content-type'];
+      const isJson = type.includes('application/json');
+
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader(
         'Access-Control-Allow-Headers',
@@ -25,9 +28,12 @@ function requestHandler(req, res) {
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       res.setHeader('Content-Type', 'application/json');
-      res.end(result.data);
+
+      res.end(isJson ? JSON.stringify(result.data) : result.data);
     })
     .catch((err) => {
+      console.error(err);
+
       res.statusCode = err.statusCode || 500;
       res.end(err.message);
     });
