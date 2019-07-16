@@ -15,6 +15,8 @@ function requestHandler(req, res) {
   // Strip leading `/`
   const url = req.url.substring(1);
 
+  console.log('Request:', url);
+
   send(req.method, url)
     .then((result) => {
       const type = result.headers['content-type'];
