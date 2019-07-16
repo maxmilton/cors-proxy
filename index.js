@@ -29,7 +29,7 @@ function requestHandler(req, res) {
       );
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
-      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Content-Type', type);
 
       res.end(isJson ? JSON.stringify(result.data) : result.data);
     })
