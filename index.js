@@ -22,6 +22,12 @@ function requestHandler(req, res) {
       const type = result.headers['content-type'];
       const isJson = type.includes('application/json');
 
+      // Forward the response headers
+      Object.entries(result.headers).forEach(([key, value]) => {
+        res.setHeader(key, value);
+      });
+
+      // Add permissive CORS headers
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader(
         'Access-Control-Allow-Headers',
@@ -29,7 +35,6 @@ function requestHandler(req, res) {
       );
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
-      res.setHeader('Content-Type', type);
 
       res.end(isJson ? JSON.stringify(result.data) : result.data);
     })
