@@ -38,6 +38,12 @@ function requestHandler(req, res) {
     .catch((err) => {
       console.error(err);
 
+      // Add permissive CORS headers
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Headers', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+
       res.statusCode = err.statusCode || 500;
       res.end(err.message);
     });
