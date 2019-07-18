@@ -8,10 +8,33 @@ const { send } = require('httpie');
 const PORT = process.env.PORT || 8081;
 
 /**
+ * @param {http.ServerResponse} res - Server response.
+ * @param {http.ServerResponse} result - The forwarded request's response.
+ * @returns {{ isJson: boolean }} Data used to finish the response.
+ */
+function prepareResponse(res, result) {
+  // Forward the response headers
+  Object.entries(result.headers).forEach(([key, value]) => {
+    res.setHeader(key, value);
+  });
+
+  // Add permissive CORS headers
+  res.setHeader('access-control-allow-origin', '*');
+  res.setHeader('access-control-allow-headers', '*');
+  res.setHeader('access-control-allow-methods', 'GET, POST, OPTIONS');
+  res.setHeader('access-control-allow-credentials', 'true');
+
+  const type = result.headers && result.headers['content-type'];
+  const isJson = type && type.includes('application/json');
+
+  return { isJson };
+}
+
+/**
  * @param {http.IncomingMessage} req - Client request.
  * @param {http.ServerResponse} res - Server response.
  */
-function requestHandler(req, res) {
+function handleRequest(req, res) {
   // Strip leading `/`
   const url = req.url.substring(1);
 
@@ -19,19 +42,7 @@ function requestHandler(req, res) {
 
   send(req.method, url)
     .then((result) => {
-      const type = result.headers['content-type'];
-      const isJson = type.includes('application/json');
-
-      // Forward the response headers
-      Object.entries(result.headers).forEach(([key, value]) => {
-        res.setHeader(key, value);
-      });
-
-      // Add permissive CORS headers
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Headers', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      const { isJson } = prepareResponse(res, result);
 
       res.statusCode = result.statusCode;
       res.end(isJson ? JSON.stringify(result.data) : result.data);
@@ -39,19 +50,7 @@ function requestHandler(req, res) {
     .catch((error) => {
       console.error(error);
 
-      const type = error.headers && error.headers['content-type'];
-      const isJson = type && type.includes('application/json');
-
-      // Forward the response headers
-      Object.entries(error.headers).forEach(([key, value]) => {
-        res.setHeader(key, value);
-      });
-
-      // Add permissive CORS headers
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Headers', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      const { isJson } = prepareResponse(res, error);
 
       res.statusCode = error.statusCode || 500;
       const data = error.data || error;
@@ -59,7 +58,7 @@ function requestHandler(req, res) {
     });
 }
 
-const server = http.createServer(requestHandler);
+const server = http.createServer(handleRequest);
 
 server.on('error', (err) => {
   console.error(err);
