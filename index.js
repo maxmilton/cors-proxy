@@ -33,10 +33,19 @@ function requestHandler(req, res) {
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
 
+      res.statusCode = result.statusCode;
       res.end(isJson ? JSON.stringify(result.data) : result.data);
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((error) => {
+      console.error(error);
+
+      const type = error.headers && error.headers['content-type'];
+      const isJson = type && type.includes('application/json');
+
+      // Forward the response headers
+      Object.entries(error.headers).forEach(([key, value]) => {
+        res.setHeader(key, value);
+      });
 
       // Add permissive CORS headers
       res.setHeader('Access-Control-Allow-Origin', '*');
@@ -44,8 +53,9 @@ function requestHandler(req, res) {
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-      res.statusCode = err.statusCode || 500;
-      res.end(err.message);
+      res.statusCode = error.statusCode || 500;
+      const data = error.data || error;
+      res.end(isJson ? JSON.stringify(data) : data);
     });
 }
 
