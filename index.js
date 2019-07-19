@@ -13,10 +13,12 @@ const PORT = process.env.PORT || 8081;
  * @returns {{ isJson: boolean }} Data used to finish the response.
  */
 function prepareResponse(res, result) {
-  // Forward the response headers
-  Object.entries(result.headers).forEach(([key, value]) => {
-    res.setHeader(key, value);
-  });
+  if (result.headers) {
+    // Forward the response headers
+    Object.entries(result.headers).forEach(([key, value]) => {
+      res.setHeader(key, value);
+    });
+  }
 
   // Add permissive CORS headers
   res.setHeader('access-control-allow-origin', '*');
@@ -38,8 +40,6 @@ function handleRequest(req, res) {
   // Strip leading `/`
   const url = req.url.substring(1);
 
-  console.log('Request:', url);
-
   let body = '';
 
   req.on('data', (chunk) => {
@@ -47,6 +47,12 @@ function handleRequest(req, res) {
   });
 
   req.once('end', () => {
+    console.log('Request:', {
+      body,
+      headers: req.headers,
+      url,
+    });
+
     send(req.method, url, { body, headers: req.headers })
       .then((result) => {
         const { isJson } = prepareResponse(res, result);
