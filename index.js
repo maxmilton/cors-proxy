@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 8081;
 /**
  * @param {http.ServerResponse} res - Server response.
  * @param {http.ServerResponse} result - The forwarded request's response.
- * @returns {{ isJson: boolean }} Data used to finish the response.
  */
 function prepareResponse(res, result) {
   if (result.headers) {
@@ -25,11 +24,6 @@ function prepareResponse(res, result) {
   res.setHeader('access-control-allow-headers', '*');
   res.setHeader('access-control-allow-methods', 'GET, POST, OPTIONS');
   res.setHeader('access-control-allow-credentials', 'true');
-
-  const type = result.headers && result.headers['content-type'];
-  const isJson = type && type.includes('application/json');
-
-  return { isJson };
 }
 
 /**
@@ -55,19 +49,23 @@ function handleRequest(req, res) {
 
     send(req.method, url, { body, headers: req.headers })
       .then((result) => {
-        const { isJson } = prepareResponse(res, result);
+        prepareResponse(res, result);
 
         res.statusCode = result.statusCode;
-        res.end(isJson ? JSON.stringify(result.data) : result.data);
+        res.end(
+          typeof result.data === 'object'
+            ? JSON.stringify(result.data)
+            : result.data,
+        );
       })
       .catch((error) => {
         console.error(error);
 
-        const { isJson } = prepareResponse(res, error);
+        prepareResponse(res, error);
 
         res.statusCode = error.statusCode || 500;
         const data = error.data || error;
-        res.end(isJson ? JSON.stringify(data) : data);
+        res.end(typeof data === 'object' ? JSON.stringify(data) : data);
       });
   });
 }
