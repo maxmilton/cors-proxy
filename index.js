@@ -44,12 +44,19 @@ function handleRequest(req, res) {
     console.log('Request:', {
       body,
       headers: req.headers,
+      method: req.method,
       url,
     });
 
     send(req.method, url, { body, headers: req.headers })
       .then((result) => {
         prepareResponse(res, result);
+
+        console.log('Response:', {
+          // body: result.data,
+          headers: result.headers,
+          statusCode: result.statusCode,
+        });
 
         res.statusCode = result.statusCode;
         res.end(
