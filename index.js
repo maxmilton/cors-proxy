@@ -40,23 +40,30 @@ function handleRequest(req, res) {
 
   console.log('Request:', url);
 
-  // send(req.method, url, { body: req.body, headers: req.headers })
-  send(req.method, url, { headers: req.headers })
-    .then((result) => {
-      const { isJson } = prepareResponse(res, result);
+  let body = '';
 
-      res.statusCode = result.statusCode;
-      res.end(isJson ? JSON.stringify(result.data) : result.data);
-    })
-    .catch((error) => {
-      console.error(error);
+  req.on('data', (chunk) => {
+    body += chunk;
+  });
 
-      const { isJson } = prepareResponse(res, error);
+  req.once('end', () => {
+    send(req.method, url, { body, headers: req.headers })
+      .then((result) => {
+        const { isJson } = prepareResponse(res, result);
 
-      res.statusCode = error.statusCode || 500;
-      const data = error.data || error;
-      res.end(isJson ? JSON.stringify(data) : data);
-    });
+        res.statusCode = result.statusCode;
+        res.end(isJson ? JSON.stringify(result.data) : result.data);
+      })
+      .catch((error) => {
+        console.error(error);
+
+        const { isJson } = prepareResponse(res, error);
+
+        res.statusCode = error.statusCode || 500;
+        const data = error.data || error;
+        res.end(isJson ? JSON.stringify(data) : data);
+      });
+  });
 }
 
 const server = http.createServer(handleRequest);
