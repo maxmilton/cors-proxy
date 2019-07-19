@@ -40,7 +40,8 @@ function handleRequest(req, res) {
 
   console.log('Request:', url);
 
-  send(req.method, url)
+  // send(req.method, url, { body: req.body, headers: req.headers })
+  send(req.method, url, { headers: req.headers })
     .then((result) => {
       const { isJson } = prepareResponse(res, result);
 
