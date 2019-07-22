@@ -43,8 +43,8 @@ function prepareResponse(res, result) {
 }
 
 /**
- * @param {http.IncomingMessage} req - Client request.
- * @param {http.ServerResponse} res - Server response.
+ * @param {http.IncomingMessage} req - Original client request.
+ * @param {http.ServerResponse} res - Final server response.
  */
 function handleRequest(req, res) {
   // Strip leading `/`
@@ -60,7 +60,9 @@ function handleRequest(req, res) {
     const headers = { ...req.headers };
 
     unwantedHeaders.forEach((header) => {
-      delete headers[header];
+      try {
+        delete headers[header];
+      } catch (err) {}
     });
 
     // Set body as undefined rather than an empty string
