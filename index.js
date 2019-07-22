@@ -41,14 +41,19 @@ function handleRequest(req, res) {
   });
 
   req.once('end', () => {
+    const headers = {
+      ...req.headers,
+      host: req.headers.origin.replace(/https?:\/\//, ''),
+    };
+
     console.log('Request:', {
       body,
-      headers: req.headers,
+      headers,
       method: req.method,
       url,
     });
 
-    send(req.method, url, { body, headers: req.headers })
+    send(req.method, url, { body, headers })
       .then((result) => {
         prepareResponse(res, result);
 
@@ -59,11 +64,9 @@ function handleRequest(req, res) {
         });
 
         res.statusCode = result.statusCode;
-        res.end(
-          typeof result.data === 'object'
-            ? JSON.stringify(result.data)
-            : result.data,
-        );
+        const { data } = result;
+        const isObj = typeof data === 'object' && !Buffer.isBuffer(data);
+        res.end(isObj ? JSON.stringify(data) : data);
       })
       .catch((error) => {
         console.error(error);
@@ -72,7 +75,8 @@ function handleRequest(req, res) {
 
         res.statusCode = error.statusCode || 500;
         const data = error.data || error;
-        res.end(typeof data === 'object' ? JSON.stringify(data) : data);
+        const isObj = typeof data === 'object' && !Buffer.isBuffer(data);
+        res.end(isObj ? JSON.stringify(data) : data);
       });
   });
 }
