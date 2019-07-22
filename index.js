@@ -57,16 +57,12 @@ function handleRequest(req, res) {
   });
 
   req.once('end', () => {
-    const headers = { ...req.headers };
-
+    const headers = Object.assign({}, req.headers);
     unwantedHeaders.forEach((header) => {
       try {
         delete headers[header];
       } catch (err) {}
     });
-
-    // Set body as undefined rather than an empty string
-    body = body || undefined;
 
     console.log('Request:', {
       body,
@@ -75,7 +71,7 @@ function handleRequest(req, res) {
       url,
     });
 
-    send(req.method, url, { body, headers })
+    send(req.method, url, { body: body || undefined, headers })
       .then((result) => {
         prepareResponse(res, result);
 
