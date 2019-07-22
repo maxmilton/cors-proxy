@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers, no-console */
+/* eslint-disable @typescript-eslint/no-magic-numbers, no-console, security/detect-object-injection */
 
 'use strict';
 
@@ -6,6 +6,22 @@ const http = require('http');
 const { send } = require('httpie');
 
 const PORT = process.env.PORT || 8081;
+const unwantedHeaders = [
+  'connection',
+  'host',
+  'origin',
+  'referer',
+  'pragma',
+  'accept-encoding',
+  'cdn-loop',
+  'cache-control',
+  'user-agent',
+  'cf-connecting-ip',
+  'cf-visitor',
+  'cf-ray',
+  'x-forwarded-for',
+  'x-forwarded-proto',
+];
 
 /**
  * @param {http.ServerResponse} res - Server response.
@@ -41,10 +57,14 @@ function handleRequest(req, res) {
   });
 
   req.once('end', () => {
-    const headers = {
-      ...req.headers,
-      host: req.headers.origin.replace(/https?:\/\//, ''),
-    };
+    const headers = { ...req.headers };
+
+    unwantedHeaders.forEach((header) => {
+      delete headers[header];
+    });
+
+    // Set body as undefined rather than an empty string
+    body = body || undefined;
 
     console.log('Request:', {
       body,
@@ -69,11 +89,15 @@ function handleRequest(req, res) {
         res.end(isObj ? JSON.stringify(data) : data);
       })
       .catch((error) => {
-        console.error(error);
-
         prepareResponse(res, error);
 
-        res.statusCode = error.statusCode || 500;
+        console.error(error);
+
+        res.statusCode =
+          error.statusCode >= 200 && error.statusCode < 300
+            ? error.statusCode
+            : 500;
+
         const data = error.data || error;
         const isObj = typeof data === 'object' && !Buffer.isBuffer(data);
         res.end(isObj ? JSON.stringify(data) : data);
