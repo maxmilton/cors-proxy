@@ -27,7 +27,7 @@
     "jest": "24.8.0",
     "minna-tools": "0.27.0",
     "prettier": "1.18.2",
-    "remark-cli": "6.0.1",
+    "remark-cli": "7.0.0",
     "typescript": "3.5.3"
   },
   "prettier": "minna-tools/prettier",
