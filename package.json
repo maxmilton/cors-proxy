@@ -8,7 +8,9 @@
   "license": "Apache-2.0",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
+    "start": "node index.js",
+    "prod:start": "pm2 start ecosystem.config.js",
+    "prod:update": "pm2 save && yarn global add pm2 && pm2 update && pm2 reload ecosystem.config.js",
     "lint": "yarn lint:md && yarn lint:js && yarn lint:types",
     "lint:md": "remark --frail --quiet .",
     "lint:js": "eslint --ext js,md --report-unused-disable-directives .",
