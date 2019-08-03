@@ -22,14 +22,14 @@
     "httpie": "1.1.2"
   },
   "devDependencies": {
-    "@types/node": "12.6.8",
+    "@types/node": "12.6.9",
     "@wearegenki/renovate-config": "1.0.0",
     "codecov": "3.5.0",
-    "eslint": "6.0.1",
+    "eslint": "6.1.0",
     "jest": "24.8.0",
-    "minna-tools": "0.27.0",
+    "minna-tools": "0.30.3",
     "prettier": "1.18.2",
-    "remark-cli": "6.0.1",
+    "remark-cli": "7.0.0",
     "typescript": "3.5.3"
   },
   "prettier": "minna-tools/prettier",
