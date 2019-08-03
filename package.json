@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "cors-proxy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "CORS proxy",
   "repository": "https://github.com/MaxMilton/cors-proxy",
   "author": "Max Milton <max@wearegenki.com>",
