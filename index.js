@@ -94,7 +94,7 @@ function handleRequest(req, res) {
         res.statusCode =
           error.statusCode >= 200 && error.statusCode < 300
             ? 500
-            : error.statusCode;
+            : error.statusCode || 500;
 
         const data = error.data || error;
         const isObj = typeof data === 'object' && !Buffer.isBuffer(data);
