@@ -2,8 +2,17 @@
 
 'use strict';
 
+const { gitDescribe } = require('@minna-ui/utils');
+const Sentry = require('@sentry/node');
 const http = require('http');
 const { send } = require('httpie');
+
+Sentry.init({
+  debug: !!process.env.SENTRY_DEBUG,
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  release: gitDescribe() || '',
+});
 
 const PORT = process.env.PORT || 8081;
 const unwantedHeaders = [
@@ -47,6 +56,8 @@ function prepareResponse(res, result) {
  * @param {http.ServerResponse} res - Final server response.
  */
 function handleRequest(req, res) {
+  Sentry.setTag('host', req.headers.host);
+
   // Strip leading `/`
   const url = req.url.substring(1);
 
@@ -90,6 +101,7 @@ function handleRequest(req, res) {
         prepareResponse(res, error);
 
         console.error(error);
+        Sentry.captureException(error);
 
         res.statusCode =
           error && error.statusCode < 200 && error.statusCode >= 300
@@ -107,6 +119,7 @@ const server = http.createServer(handleRequest);
 
 server.on('error', (err) => {
   console.error(err);
+  Sentry.captureException(err);
 });
 
 server.listen(PORT, () => {
