@@ -10,7 +10,7 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
         // SENTRY_DEBUG: true,
-        SENTRY_DSN: '__PUT_YOUR_DSN_HERE',
+        SENTRY_DSN: '__PUT_YOUR_DSN_HERE__',
       },
     },
   ],
