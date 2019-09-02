@@ -19,7 +19,7 @@
     "test-ci": "jest --coverage --runInBand --ci"
   },
   "dependencies": {
-    "@minna-ui/utils": "0.30.0",
+    "@minna-ui/utils": "0.32.0",
     "@sentry/node": "5.5.0",
     "httpie": "1.1.2"
   },

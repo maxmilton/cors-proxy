@@ -404,7 +404,12 @@
   resolved "https://registry.yarnpkg.com/@minna-ui/ts-config/-/ts-config-0.30.0.tgz#20e3cba6354959c0b44aa348034c610350645082"
   integrity sha512-WgmaxqK/JNY3cmNAkrsvMnx16DIsKqBhTo9RH6qDUfdbkDvqXwUQAFDqBl0AHjA7ODy2H/1LBZyrYiBaafC/WA==
 
-"@minna-ui/utils@0.30.0", "@minna-ui/utils@^0.30.0":
+"@minna-ui/utils@0.32.0":
+  version "0.32.0"
+  resolved "https://registry.yarnpkg.com/@minna-ui/utils/-/utils-0.32.0.tgz#beacd472dddc4fa674d33a9c3ad0a6b74c7a3d16"
+  integrity sha512-Sq8xZRBS47ITI65VFf66sJ6aDPH4n4YhkpN8grMjF5YCwBTgHdaquCMCTfOqwYglxJxiNX57GPhWAK7QK0rSBA==
+
+"@minna-ui/utils@^0.30.0":
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/@minna-ui/utils/-/utils-0.30.0.tgz#f6d87bf627efa7e961d96041851afe09f1342fe0"
   integrity sha512-esrcgsdSuCT8/p0F88T/hLbBCLmY+Gy9xIONqqFRR3HGMN9i7kBSyEdoqcd8LD+EifuTiBAFuBu12FD2j3g2Hw==
