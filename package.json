@@ -34,7 +34,7 @@
     "remark-cli": "7.0.0",
     "typescript": "3.6.3"
   },
-  "prettier": "minna-tools/prettier",
+  "prettier": "minna-tools-essential/prettier",
   "eslintConfig": {
     "root": true,
     "extends": [
@@ -43,18 +43,15 @@
     ]
   },
   "eslintIgnore": [
-    "**/node_modules/**",
-    "__sapper__/**",
-    "_backup/**",
     "test/coverage/**"
   ],
   "remarkConfig": {
     "plugins": [
-      "minna-tools/remark"
+      "minna-tools-essential/remark"
     ]
   },
   "jest": {
-    "preset": "minna-tools"
+    "preset": "minna-tools-essential"
   },
   "renovate": {
     "extends": [
@@ -62,6 +59,6 @@
     ]
   },
   "engines": {
-    "node": ">=10.16.0"
+    "node": ">10.0.0"
   }
 }
