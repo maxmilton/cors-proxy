@@ -8,6 +8,5 @@
     "checkJs": true,
     "isolatedModules": true,
     "noEmit": true
-  },
-  "exclude": ["test/coverage"]
+  }
 }
