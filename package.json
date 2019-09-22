@@ -13,7 +13,7 @@
     "prod:update": "pm2 save && yarn global add pm2 && pm2 update && yarn install --pure-lockfile --production && pm2 reload ecosystem.config.js",
     "lint": "yarn lint:md && yarn lint:js && yarn lint:types",
     "lint:md": "remark --frail --quiet .",
-    "lint:js": "eslint --ext js,md --report-unused-disable-directives .",
+    "lint:js": "eslint --ext html,js,md,ts .",
     "lint:types": "tsc --noEmit",
     "test": "jest --notify --watch",
     "test-ci": "jest --coverage --runInBand --ci"
