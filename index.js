@@ -68,7 +68,7 @@ function handleRequest(req, res) {
   });
 
   req.once('end', () => {
-    const headers = Object.assign({}, req.headers);
+    const headers = { ...req.headers };
     unwantedHeaders.forEach((header) => {
       try {
         delete headers[header];
