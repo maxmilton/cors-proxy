@@ -5,7 +5,7 @@
   "description": "CORS proxy",
   "repository": "https://github.com/MaxMilton/cors-proxy",
   "author": "Max Milton <max@wearegenki.com>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
