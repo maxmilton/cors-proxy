@@ -29,7 +29,7 @@
     "codecov": "3.6.1",
     "eslint": "6.4.0",
     "jest": "24.9.0",
-    "minna-tools-essential": "0.34.0",
+    "minna-tools-essential": "0.34.1",
     "prettier": "1.18.2",
     "remark-cli": "7.0.0",
     "typescript": "3.7.2"
