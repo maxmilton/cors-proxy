@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@minna-ui/utils": "0.34.0",
-    "@sentry/node": "5.9.0",
+    "@sentry/node": "5.10.2",
     "httpie": "1.1.2"
   },
   "devDependencies": {
