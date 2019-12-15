@@ -1,40 +1,40 @@
 {
-  "private": true,
   "name": "cors-proxy",
-  "version": "0.2.0",
+  "version": "0.3.0",
+  "private": true,
   "description": "CORS proxy",
+  "license": "MIT",
   "repository": "https://github.com/MaxMilton/cors-proxy",
   "author": "Max Milton <max@wearegenki.com>",
-  "license": "MIT",
   "main": "index.js",
+  "engines": {
+    "node": ">10.0.0"
+  },
   "scripts": {
-    "start": "node index.js",
+    "lint": "yarn lint:md && yarn lint:js && yarn lint:types",
+    "lint:js": "eslint --ext html,js,md,ts .",
+    "lint:md": "remark --frail --quiet .",
+    "lint:types": "tsc --noEmit",
     "prod:start": "pm2 start ecosystem.config.js",
     "prod:update": "pm2 save && yarn global add pm2 && pm2 update && yarn install --pure-lockfile --production && pm2 reload ecosystem.config.js",
-    "lint": "yarn lint:md && yarn lint:js && yarn lint:types",
-    "lint:md": "remark --frail --quiet .",
-    "lint:js": "eslint --ext html,js,md,ts .",
-    "lint:types": "tsc --noEmit",
+    "start": "node index.js",
     "test": "jest --notify --watch",
-    "test-ci": "jest --coverage --runInBand --ci"
+    "test-ci": "jest --coverage --ci"
   },
   "dependencies": {
-    "@minna-ui/utils": "0.34.0",
-    "@sentry/node": "5.9.0",
     "httpie": "1.1.2"
   },
   "devDependencies": {
-    "@types/node": "12.12.7",
+    "@types/node": "12.12.17",
     "@wearegenki/renovate-config": "1.0.0",
     "codecov": "3.6.1",
-    "eslint": "6.6.0",
+    "eslint": "6.7.2",
     "jest": "24.9.0",
-    "minna-tools-essential": "0.34.1",
+    "minna-tools-essential": "0.35.0",
     "prettier": "1.19.1",
     "remark-cli": "7.0.1",
-    "typescript": "3.7.2"
+    "typescript": "3.7.3"
   },
-  "prettier": "minna-tools-essential/prettier",
   "eslintConfig": {
     "root": true,
     "extends": [
@@ -45,20 +45,18 @@
   "eslintIgnore": [
     "test/coverage/**"
   ],
+  "jest": {
+    "preset": "minna-tools-essential"
+  },
+  "prettier": "minna-tools-essential/prettier",
   "remarkConfig": {
     "plugins": [
       "minna-tools-essential/remark"
     ]
   },
-  "jest": {
-    "preset": "minna-tools-essential"
-  },
   "renovate": {
     "extends": [
       "@wearegenki"
     ]
-  },
-  "engines": {
-    "node": ">10.0.0"
   }
 }
