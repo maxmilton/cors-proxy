@@ -64,22 +64,22 @@ function handleRequest(req, res) {
       } catch (err) {}
     });
 
-    console.log('Request:', {
-      body,
-      headers,
-      method: req.method,
-      url,
-    });
+    // console.log('Request:', {
+    //   body,
+    //   headers,
+    //   method: req.method,
+    //   url,
+    // });
 
     send(req.method, url, { body: body || undefined, headers })
       .then((result) => {
         prepareResponse(res, result);
 
-        console.log('Response:', {
-          // body: result.data,
-          headers: result.headers,
-          statusCode: result.statusCode,
-        });
+        // console.log('Response:', {
+        //   // body: result.data,
+        //   headers: result.headers,
+        //   statusCode: result.statusCode,
+        // });
 
         res.statusCode = result.statusCode;
         const { data } = result;
