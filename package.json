@@ -22,6 +22,7 @@
     "test-ci": "jest --coverage --ci"
   },
   "dependencies": {
+    "@google-cloud/profiler": "3.0.1",
     "httpie": "1.1.2"
   },
   "devDependencies": {
