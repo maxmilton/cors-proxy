@@ -26,7 +26,7 @@
     "httpie": "1.1.2"
   },
   "devDependencies": {
-    "@types/node": "12.12.17",
+    "@types/node": "12.12.28",
     "@wearegenki/renovate-config": "1.0.0",
     "codecov": "3.6.5",
     "eslint": "6.7.2",
