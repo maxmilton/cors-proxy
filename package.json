@@ -29,7 +29,7 @@
     "@types/node": "12.12.28",
     "@wearegenki/renovate-config": "1.0.0",
     "codecov": "3.6.5",
-    "eslint": "6.7.2",
+    "eslint": "6.8.0",
     "jest": "24.9.0",
     "minna-tools-essential": "0.35.0",
     "prettier": "1.19.1",
