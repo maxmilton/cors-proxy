@@ -34,7 +34,7 @@
     "minna-tools-essential": "0.35.0",
     "prettier": "1.19.1",
     "remark-cli": "7.0.1",
-    "typescript": "3.8.2"
+    "typescript": "3.9.9"
   },
   "eslintConfig": {
     "root": true,
