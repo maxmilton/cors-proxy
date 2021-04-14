@@ -24,14 +24,16 @@ const unwantedHeaders = [
 ];
 
 /**
- * @param {http.ServerResponse} res - Server response.
- * @param {http.ServerResponse} result - The forwarded request's response.
+ * @param {http.ServerResponse} res
+ * @param {import('httpie').HttpieResponse} result
  */
 function prepareResponse(res, result) {
   if (result.headers) {
     // Forward the response headers
     Object.entries(result.headers).forEach(([key, value]) => {
-      res.setHeader(key, value);
+      if (value) {
+        res.setHeader(key, value);
+      }
     });
   }
 
@@ -47,6 +49,7 @@ function prepareResponse(res, result) {
  * @param {http.ServerResponse} res - Final server response.
  */
 function handleRequest(req, res) {
+  // @ts-expect-error
   // Strip leading `/`
   const url = req.url.substring(1);
 
@@ -71,7 +74,11 @@ function handleRequest(req, res) {
     //   url,
     // });
 
-    send(req.method, url, { body: body || undefined, headers })
+    send(req.method || 'GET', url, {
+      body: body || undefined,
+      // @ts-expect-error - headers[key]:undefined should actually be fine
+      headers,
+    })
       .then((result) => {
         prepareResponse(res, result);
 
@@ -81,7 +88,7 @@ function handleRequest(req, res) {
         //   statusCode: result.statusCode,
         // });
 
-        res.statusCode = result.statusCode;
+        res.statusCode = result.statusCode || 200;
         const { data } = result;
         const isObj = typeof data === 'object' && !Buffer.isBuffer(data);
         res.end(isObj ? JSON.stringify(data) : data);
