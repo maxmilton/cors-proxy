@@ -2,7 +2,7 @@
   "name": "cors-proxy",
   "version": "0.3.0",
   "private": true,
-  "description": "CORS proxy",
+  "description": "A simple transparent proxy that adds permissive CORS headers to API responses",
   "license": "MIT",
   "repository": "https://github.com/MaxMilton/cors-proxy",
   "author": "Max Milton <max@wearegenki.com>",
