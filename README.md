@@ -11,10 +11,10 @@ It works in 2 parts, a node server and an nginx reverse proxy. "Why is node requ
 
 ## Usage
 
-1. Optionally install [PM2](https://pm2.keymetrics.io/) for managing the node process.
 1. Clone this repo to your server or dev environment.
 1. Make any changes required; look into `index.js` and `server.js`.
 1. Set up an [nginx](https://nginx.org/en/) virtual host using `nginx.conf` as a template.
+1. Optionally install [PM2](https://pm2.keymetrics.io/) for managing the node process.
 1. Look in `package.json#scripts` for how to start the server; with PM2 `prod:start` or `prod:update` and without PM2 `start`.
 
 ## Licence
