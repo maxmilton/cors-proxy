@@ -1,8 +1,8 @@
 'use strict';
 
 const profiler = require('@google-cloud/profiler');
-const { startServer } = require('./server');
 const pkg = require('./package.json');
+const { startServer } = require('./server');
 
 profiler.start({
   logLevel: 3,

@@ -38,7 +38,7 @@ function prepareResponse(res, result) {
   // Add permissive CORS headers
   res.setHeader('access-control-allow-origin', '*');
   res.setHeader('access-control-allow-headers', '*');
-  res.setHeader('access-control-allow-methods', 'GET, POST, OPTIONS');
+  res.setHeader('access-control-allow-methods', '*');
   res.setHeader('access-control-allow-credentials', 'true');
 }
 
