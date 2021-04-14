@@ -1,12 +1,11 @@
 {
-  "editor.formatOnSave": true,
-  "eslint.autoFixOnSave": true,
-  "eslint.enable": true,
-  "eslint.validate": [
-    { "language": "javascript", "autoFix": true },
-    { "language": "markdown", "autoFix": true }
+  "editor.codeActionsOnSave": [
+    // "source.organizeImports",
+    "source.fixAll.format",
+    "source.fixAll.eslint",
+    "source.fixAll.stylelint"
   ],
-  "files.eol": "\n",
-  "javascript.implicitProjectConfig.checkJs": true
-  // "prettier.eslintIntegration": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": false,
+  "js/ts.implicitProjectConfig.checkJs": true,
 }
