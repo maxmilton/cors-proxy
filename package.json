@@ -4,8 +4,8 @@
   "private": true,
   "description": "A simple transparent proxy that adds permissive CORS headers to API responses",
   "license": "MIT",
-  "repository": "https://github.com/MaxMilton/cors-proxy",
-  "author": "Max Milton <max@wearegenki.com>",
+  "repository": "maxmilton/cors-proxy",
+  "author": "Max Milton <max@happycode.ltd>",
   "main": "index.js",
   "engines": {
     "node": ">10.0.0"
