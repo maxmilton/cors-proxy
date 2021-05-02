@@ -4181,7 +4181,12 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
-prettier-plugin-package2@0.5.2, prettier-plugin-package2@^0.5.1:
+prettier-plugin-package2@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-package2/-/prettier-plugin-package2-0.6.0.tgz#5641e66eccebe1c45631d48a79a924eced5d6091"
+  integrity sha512-tYMLc9+pLZ8/TZJGvFV2kErpThaD045wSaUR4n+H1eAAEqj9TLMxkCAQaHurMUxpyIJ+4v14zWch9q/gMArr8Q==
+
+prettier-plugin-package2@^0.5.1:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/prettier-plugin-package2/-/prettier-plugin-package2-0.5.2.tgz#cad4a8e49d55df30b7c8f9efcc7c9dedc09e8634"
   integrity sha512-7kXHegFtu2lUak0Fn5BK9c4r3vjNYwODx80j0Jl5ZUPx1e/ef49UGnahCsTKpPaIAioCN6Ru8X7g7e6ZSmV2Cw==
