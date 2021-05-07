@@ -24,7 +24,7 @@
     "httpie": "1.1.2"
   },
   "devDependencies": {
-    "@types/node": "14.14.39",
+    "@types/node": "14.14.44",
     "@wearegenki/renovate-config": "1.0.0",
     "eslint": "7.24.0",
     "minna-tools-essential": "0.36.0",
