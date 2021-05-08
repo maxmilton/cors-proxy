@@ -26,7 +26,7 @@
   "devDependencies": {
     "@types/node": "14.14.39",
     "@wearegenki/renovate-config": "1.0.0",
-    "eslint": "7.24.0",
+    "eslint": "7.26.0",
     "minna-tools-essential": "0.36.0",
     "prettier": "2.2.1",
     "prettier-plugin-package2": "0.5.2",
