@@ -42,10 +42,5 @@
   "eslintIgnore": [
     "test/coverage/**"
   ],
-  "prettier": "minna-tools-essential/prettier",
-  "renovate": {
-    "extends": [
-      "@wearegenki"
-    ]
-  }
+  "prettier": "minna-tools-essential/prettier"
 }
