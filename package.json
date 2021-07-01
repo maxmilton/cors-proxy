@@ -27,7 +27,7 @@
     "@types/node": "15.0.2",
     "eslint": "7.26.0",
     "minna-tools-essential": "0.36.0",
-    "prettier": "2.3.0",
+    "prettier": "2.3.2",
     "typescript": "4.2.4"
   },
   "eslintConfig": {
