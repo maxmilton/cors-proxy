@@ -1,41 +1,65 @@
 {
   "name": "cors-proxy",
   "version": "1.0.0",
-  "private": true,
-  "description": "A simple transparent proxy that adds permissive CORS headers to API responses",
-  "license": "MIT",
+  "description": "A simple transparent proxy that adds permissive CORS and CORP headers to all HTTP responses",
   "repository": "maxmilton/cors-proxy",
   "author": "Max Milton <max@happycode.ltd>",
-  "main": "index.js",
+  "license": "MIT",
+  "private": true,
   "engines": {
     "node": ">= 10"
   },
+  "main": "index.js",
   "scripts": {
     "lint": "yarn run lint:js && yarn run lint:ts",
-    "lint:js": "eslint --ext html,js,md,ts .",
+    "lint:js": "eslint --ignore-path .gitignore .",
     "lint:ts": "tsc --noEmit",
-    "prod:start": "pm2 start ecosystem.config.js",
-    "prod:update": "pm2 save && yarn global add pm2 && pm2 update && yarn install --pure-lockfile --production && pm2 reload ecosystem.config.js",
-    "start": "node index.js",
-    "test": "echo 'TODO: Testing'; exit 0"
+    "start": "node index.js"
   },
   "dependencies": {
-    "@google-cloud/profiler": "4.1.2",
-    "httpie": "1.1.2"
+    "@polka/send": "1.0.0-next.15",
+    "httpie": "2.0.0-next.13"
   },
   "devDependencies": {
-    "@types/node": "15.0.2",
-    "eslint": "7.26.0",
-    "minna-tools-essential": "0.36.0",
-    "prettier": "2.3.0",
-    "typescript": "4.2.4"
+    "@types/node": "16.9.2",
+    "@typescript-eslint/eslint-plugin": "4.31.1",
+    "@typescript-eslint/parser": "4.31.1",
+    "eslint": "7.32.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-airbnb-typescript": "14.0.0",
+    "eslint-plugin-import": "2.24.2",
+    "prettier": "2.4.1",
+    "typescript": "4.4.3"
   },
   "eslintConfig": {
     "root": true,
+    "reportUnusedDisableDirectives": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": [
+        "./tsconfig.json"
+      ]
+    },
     "extends": [
-      "@minna-ui/eslint-config",
-      "@minna-ui/eslint-config/node-js"
-    ]
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "airbnb-base",
+      "airbnb-typescript/base",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "rules": {
+      "@typescript-eslint/no-var-requires": 0,
+      "guard-for-in": 0,
+      "no-console": 0,
+      "no-restricted-syntax": 0,
+      "strict": 0
+    }
   },
-  "prettier": "minna-tools-essential/prettier"
+  "prettier": {
+    "arrowParens": "always",
+    "endOfLine": "lf",
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
 }

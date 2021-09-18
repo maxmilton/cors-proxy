@@ -1,12 +1,14 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers, no-console, security/detect-object-injection */
-
 'use strict';
 
+/** @type {import('@polka/send').default} */
+// @ts-expect-error - cast
+const send = require('@polka/send');
 const http = require('http');
-const { send } = require('httpie');
+const httpie = require('httpie');
 
-const PORT = process.env.PORT || 8081;
-const unwantedHeaders = [
+const PORT = process.env.PORT || 8080;
+// TODO: Pass through some headers
+const noPassHeaders = new Set([
   'connection',
   'host',
   'origin',
@@ -21,102 +23,77 @@ const unwantedHeaders = [
   'cf-ray',
   'x-forwarded-for',
   'x-forwarded-proto',
-];
+]);
 
-/**
- * @param {http.ServerResponse} res
- * @param {import('httpie').HttpieResponse} result
- */
-function prepareResponse(res, result) {
-  if (result.headers) {
-    // Forward the response headers
-    Object.entries(result.headers).forEach(([key, value]) => {
-      if (value) {
-        res.setHeader(key, value);
-      }
-    });
-  }
-
-  // Add permissive CORS headers
-  res.setHeader('access-control-allow-origin', '*');
-  res.setHeader('access-control-allow-headers', '*');
-  res.setHeader('access-control-allow-methods', '*');
-  res.setHeader('access-control-allow-credentials', 'true');
+/** @param {Record<string, string>} headers */
+function mixHeaders(headers) {
+  return {
+    ...headers,
+    'access-control-allow-origin': '*',
+    'access-control-allow-headers': '*',
+    'access-control-allow-methods': '*',
+    'access-control-allow-credentials': 'true',
+    'cross-origin-resource-policy': 'cross-origin',
+  };
 }
 
 /**
- * @param {http.IncomingMessage} req - Original client request.
- * @param {http.ServerResponse} res - Final server response.
+ * @param {http.IncomingMessage} req
+ * @param {http.ServerResponse} res
  */
-function handleRequest(req, res) {
-  // @ts-expect-error
-  // Strip leading `/`
-  const url = req.url.substring(1);
-
+function route(req, res) {
+  // strip leading "/"
+  const url = req.url && req.url.substring(1);
   let body = '';
+
+  console.log('[http]', req.method, url);
+
+  if (!url) {
+    res.statusCode = 421;
+    res.end('Missing target URL');
+    return;
+  }
 
   req.on('data', (chunk) => {
     body += chunk;
   });
 
   req.once('end', () => {
-    const headers = { ...req.headers };
-    unwantedHeaders.forEach((header) => {
-      try {
-        delete headers[header];
-      } catch (err) {}
-    });
+    /** @type {Record<string, string | string[] | undefined>} */
+    const headers = {};
+    for (const k in req.headers) {
+      if (!noPassHeaders.has(k)) {
+        headers[k] = req.headers[k];
+      }
+    }
 
-    // console.log('Request:', {
-    //   body,
-    //   headers,
-    //   method: req.method,
-    //   url,
-    // });
-
-    send(req.method || 'GET', url, {
-      body: body || undefined,
-      // @ts-expect-error - headers[key]:undefined should actually be fine
-      headers,
-    })
-      .then((result) => {
-        prepareResponse(res, result);
-
-        // console.log('Response:', {
-        //   // body: result.data,
-        //   headers: result.headers,
-        //   statusCode: result.statusCode,
-        // });
-
-        res.statusCode = result.statusCode || 200;
-        const { data } = result;
-        const isObj = typeof data === 'object' && !Buffer.isBuffer(data);
-        res.end(isObj ? JSON.stringify(data) : data);
+    httpie
+      .send(req.method || 'GET', url, {
+        body: body || undefined,
+        // @ts-expect-error - can handle [] or undef
+        headers,
       })
-      .catch((error) => {
-        prepareResponse(res, error);
-
-        console.error(error);
-
-        res.statusCode = (error && error.statusCode) || 500;
-
-        const data = error.data || error;
-        const isObj = typeof data === 'object' && !Buffer.isBuffer(data);
-        res.end(isObj ? JSON.stringify(data) : data);
+      .then((reply) => {
+        send(res, reply.statusCode, reply.data, mixHeaders(reply.headers));
+      })
+      .catch((/** @type {httpie.Response} */ err) => {
+        console.error(err);
+        send(
+          res,
+          err.statusCode || 500,
+          err.data || err,
+          mixHeaders(err.headers),
+        );
       });
   });
 }
 
-function startServer() {
-  const server = http.createServer(handleRequest);
-
-  server.on('error', (err) => {
-    console.error(err);
-  });
-
+function run() {
+  const server = http.createServer(route);
+  server.on('error', console.error);
   server.listen(PORT, () => {
-    console.log(`Server is listening on ${PORT}`);
+    console.log(`Listening on port ${PORT}`);
   });
 }
 
-exports.startServer = startServer;
+exports.run = run;
