@@ -21,7 +21,7 @@
     "httpie": "2.0.0-next.13"
   },
   "devDependencies": {
-    "@types/node": "16.9.2",
+    "@types/node": "16.11.35",
     "@typescript-eslint/eslint-plugin": "4.31.1",
     "@typescript-eslint/parser": "4.31.1",
     "eslint": "7.32.0",
