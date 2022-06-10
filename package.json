@@ -1,6 +1,6 @@
 {
   "name": "cors-proxy",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple transparent proxy that adds permissive CORS and CORP headers to all HTTP responses",
   "repository": "maxmilton/cors-proxy",
   "author": "Max Milton <max@happycode.ltd>",
