@@ -52,10 +52,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@polka/send@1.0.0-next.15":
-  version "1.0.0-next.15"
-  resolved "https://registry.yarnpkg.com/@polka/send/-/send-1.0.0-next.15.tgz#3e7086752725af62da54e97a35693d8645a35458"
-  integrity sha512-esR7W5PrLIo9tJqI59gotUHQOQHhYG1hsT3Vn/PPhOoL/LDDSbNHXBN/TtOA4Puhq7rFJwzP3WdtJeekfn/64g==
+"@polka/send@1.0.0-next.24":
+  version "1.0.0-next.24"
+  resolved "https://registry.yarnpkg.com/@polka/send/-/send-1.0.0-next.24.tgz#0d5dd86d6855eb1dc0f55bc678e7b72fdac7364c"
+  integrity sha512-ZCRgg0wnjDaNT9qDZTn7V7owAQBezadDHGjWmKXnoyId3cLozHeDi/ovsfu1JAYgZgyN4kb1OH+ouIqM4ksrBw==
 
 "@types/json-schema@^7.0.9":
   version "7.0.11"
